@@ -65,7 +65,14 @@ final class CacheManager {
     }
 
     func cachedbPathFor(path: String) throws -> String {
-        let filePath = path + dbPath
+        let fixedPath: String
+        if path.hasPrefix("~/") {
+            fixedPath = path.replacingOccurrences(of: "~/", with: NSHomeDirectory() + "/")
+        } else {
+            fixedPath = path
+        }
+
+        let filePath = fixedPath + dbPath
         guard fileManager.fileExists(atPath: filePath) else {
             throw Error.fileNotFound(path: path)
         }
