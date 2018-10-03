@@ -1,6 +1,6 @@
 # xcbt
 
-Show Xcode build time of project.
+Show Xcode build time of a specified project.
 
 ## Installation
 
@@ -25,7 +25,31 @@ Scheme: cujira-Package
     - Build time  : 9.6459s
 ```
 
-#### 2. Show build time of specified path
+#### 2. Show all build time of specified App
+
+```
+$ xcbt cujira --all
+Scheme: cujira-Package
+
+    - Build start : 2018-10-03 02:01:17 +0000
+    - Build end   : 2018-10-03 02:01:19 +0000
+    - Build time  : 1.9725s
+
+Scheme: cujira-Package
+
+    - Clean start : 2018-10-03 02:01:06 +0000
+    - Clean end   : 2018-10-03 02:01:06 +0000
+    - Clean time  : 0.4085s
+
+Scheme: cujira-Package
+
+    - Build start : 2018-10-02 12:52:04 +0000
+    - Build end   : 2018-10-02 12:52:13 +0000
+    - Build time  : 9.6459s
+
+```
+
+#### 3. Show build time of specified path
 
 ```
 $ xcbt --path "~/Library/Developer/Xcode/DerivedData/cujira-gmnfnyurvxsymsaolrsdojmyukyk"
@@ -36,7 +60,7 @@ Scheme: cujira-Package
     - Build time  : 9.6459s
 ```
 
-#### 3. Show build time of last built
+#### 4. Show build time of last built
 
 ```
 $ xcbt --last

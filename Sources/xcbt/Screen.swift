@@ -10,7 +10,7 @@ import Foundation
 final class Screen {
     init() {}
 
-    func show(cache: Cache) throws {
+    func show(cache: Cache, showAll: Bool) throws {
         let elements = cache.logs.map {
             Element(start: Date(timeIntervalSinceReferenceDate: $0.value.timeStartedRecording),
                     end: Date(timeIntervalSinceReferenceDate: $0.value.timeStoppedRecording),
@@ -24,6 +24,14 @@ final class Screen {
             throw Error.elementNotFound
         }
 
+        if showAll {
+            sorted.forEach { showElement($0) }
+        } else {
+            showElement(element)
+        }
+    }
+
+    private func showElement(_ element: Element) {
         let title = element.title
         print("""
         Scheme: \(element.schemeName)
@@ -31,6 +39,7 @@ final class Screen {
             - \(title) start : \(element.start)
             - \(title) end   : \(element.end)
             - \(title) time  : \(String(format: "%.4lf", element.time))s
+
         """)
     }
 
@@ -44,11 +53,13 @@ final class Screen {
 
         Options:
 
+            -a --all            Show all build time of specified project (that contained in Cache.db)
+
+            If you use below options, do not set [PROJECT_NAME].
+
             -l --last           Show build time of last built project
             -p --path [PATH]    Show build time of specified path
             --help              Show help
-
-            If you use options, do not set [PROJECT_NAME].
 
         """)
     }

@@ -21,11 +21,16 @@ final class ArgumentParser {
                 self.command = .last
 
             default:
-                self.command = .default(appName: arguments[1])
+                let info = DisplayInfo(appName: arguments[1], showAll: false)
+                self.command = .default(info)
             }
 
         case 3 where arguments[1] == "-p" || arguments[1] == "--path":
             self.command = .custom(path: arguments[2])
+
+        case 3 where arguments[2] == "-a" || arguments[2] == "--all":
+            let info = DisplayInfo(appName: arguments[1], showAll: true)
+            self.command = .default(info)
 
         default:
             self.command = .help
@@ -35,18 +40,23 @@ final class ArgumentParser {
 
 extension ArgumentParser {
     enum Command {
-        case `default`(appName: String)
+        case `default`(DisplayInfo)
         case custom(path: String)
         case help
         case last
     }
 
-    var appName: String? {
+    var displayInfo: DisplayInfo? {
         switch command {
-        case let .default(appName):
-            return appName
+        case let .default(displayInfo):
+            return displayInfo
         case .help, .last, .custom:
             return nil
         }
+    }
+
+    struct DisplayInfo {
+        let appName: String
+        let showAll: Bool
     }
 }
